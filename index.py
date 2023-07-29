@@ -90,10 +90,10 @@ def indicators(estado1, estado2, toogle):
     data_estado1 = df_date[df_date['ESTADO'].isin([estado1])]
     data_estado2 = df_date[df_date['ESTADO'].isin([estado2])]
 
-    initial_date = str(int(df_date['DATA INICIAL'].min() -1 ))
-    final_date = df_date['ANO'].max()
+    initial_date = str(int(df_date['PREÇO MÍNIMO REVENDA'].min()) -1 )
+    final_date = df_date['PREÇO MÁXIMO REVENDA'].max()
 
-    iterable = [(estado1, data_estado1), (estado2, data_estado2)]
+    interable = [(estado1, data_estado1), (estado2, data_estado2)]
     indicators = []
 
     for estado, data in interable:
@@ -101,9 +101,9 @@ def indicators(estado1, estado2, toogle):
         fig.add_trace(go.Indicator(
             mode='number+delta',
             title={'text': f"<span>{estado}</span><br><span style='font-size>0.7em'>{initial_date} - {final_date}</span>"},
-            value=data.at[data.index[-1], 'Valor Revenda'],
+            value=data.at[data.index[-1], 'PREÇO MÉDIO REVENDA'],
             number={'prefix': 'R$', 'valueformat': '.2f'},
-            delta={'relative': True, 'valueformat': '.1%', 'reference': data.at[data.index[0], 'Valor Revenda']}
+            delta={'relative': True, 'valueformat': '.1%', 'reference': data.at[data.index[0], 'PREÇO MÉDIO REVENDA']}
         ))
 
         fig.update_layout(template=template)
@@ -112,4 +112,4 @@ def indicators(estado1, estado2, toogle):
 
 #Iniciar Servidor
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
